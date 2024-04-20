@@ -15,29 +15,16 @@ struct msgbuf {
 int main(){
     int msgid;
     struct msgbuf msg;
-    key_t key=1234
+    key_t key=1234;
     msgid=msgget(key,0666|IPC_CREAT);
-    if(msgid==-1){
-        printf("Error in creating message queue\n");
-        exit(1);
-    }
-    int pid;
-    pid=fork();
-    if(pid==0){
-        while(1){
-            msgrcv(msgid,&msg,sizeof(msg.mtext),1,0);
-            printf("User 1: %s\n",msg.mtext);
+    msg.mtype=1;
+    while(1){
+        printf("Enter message: ");
+        fgets(msg.mtext,100,stdin);
+        msgsnd(msgid,&msg,sizeof(msg),0);
+        if(strncmp(msg.mtext,"exit",4)==0){
+            break;
         }
-    }
-    else if(pid>0){
-        while(1){
-            msgrcv(msgid,&msg,sizeof(msg.mtext),2,0);
-            printf("User 2: %s\n",msg.mtext);
-        }
-    }
-    else{
-        printf("Error\n");
-        exit(1);
     }
     return 0;
 }
