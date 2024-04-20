@@ -1,0 +1,1 @@
+This rearranged code should produce the desired output with the specified input. It first calculates the upper and lower margins to center the pattern vertically, then prints the pattern accordingly, followed by the lower margin to ensure the correct overall spacing.
